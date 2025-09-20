@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
+const authController = require('../controllers/authController');
 
 const router = express.Router();
 
@@ -48,5 +49,16 @@ router.get("/me", (req, res) => {
   }
   res.json({ message: "Current user", user: req.session.user });
 });
+
+// Trang đăng ký
+router.get('/register', authController.registerForm);
+router.post('/register', authController.registerUser);
+
+// Trang đăng nhập
+router.get('/login', authController.loginForm);
+router.post('/login', authController.loginUser);
+
+// Logout
+router.post('/logout', authController.logoutUser);
 
 module.exports = router;
